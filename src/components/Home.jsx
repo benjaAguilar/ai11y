@@ -1,7 +1,7 @@
 import CodeBoxes from "./codeBoxes/CodeBoxes";
 import styles from "./app.module.css";
 
-function App() {
+function Home() {
   return (
     <>
       <header>
@@ -35,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
