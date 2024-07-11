@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+}
+
+.circlesBox{
+    display: flex;
+    gap: 2rem;
+}
+
+.circleBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .score{
+        position: absolute;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+}
+
+.circle{
+    width: 100px;
+}
+
+.suggestions{
+    max-width: 500px;
+}
