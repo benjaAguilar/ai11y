@@ -5,20 +5,25 @@ import { useRef } from "react";
 function CodeBoxes() {
   const html = `<h1> Hello World lol </h1>`;
   const outputRef = useRef(null);
+  const inputRef = useRef(null);
+
+  function handleInputEditorDidMount(editor) {
+    inputRef.current = editor;
+  }
 
   function handleEditorDidMount(editor) {
     outputRef.current = editor;
   }
 
-  function copyCode() {
-    if (outputRef.current) {
-      navigator.clipboard.writeText(outputRef.current.getValue());
+  function copyCode(cRef) {
+    if (cRef.current) {
+      navigator.clipboard.writeText(cRef.current.getValue());
       alert("code copied!");
     }
   }
 
   return (
-    <>
+    <div className={styles.codeContainer}>
       <div className={styles.box}>
         <h2>Input Html</h2>
         <Editor
@@ -26,7 +31,10 @@ function CodeBoxes() {
           height="400px"
           defaultLanguage="html"
           theme="vs-dark"
+          options={{ readOnly: true }}
+          onMount={handleInputEditorDidMount}
         />
+        <button onClick={() => copyCode(inputRef)}>Copy</button>
       </div>
       <div className={styles.box}>
         <h2>Output Html</h2>
@@ -39,9 +47,9 @@ function CodeBoxes() {
           options={{ readOnly: true }}
           onMount={handleEditorDidMount}
         />
-        <button onClick={copyCode}>Copy</button>
+        <button onClick={() => copyCode(outputRef)}>Copy</button>
       </div>
-    </>
+    </div>
   );
 }
 

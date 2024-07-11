@@ -1,5 +1,4 @@
-import CodeBoxes from "./codeBoxes/CodeBoxes";
-import styles from "./app.module.css";
+import { Outlet } from "react-router-dom";
 
 function Home() {
   return (
@@ -16,19 +15,7 @@ function Home() {
           <button>Compare</button>
         </section>
         <section>
-          {/* Code text boxes goes here */}
-          <div className={styles.codeContainer}>
-            <CodeBoxes />
-          </div>
-          <section>
-            {/* overall info goes here */}
-            <div>
-              <h2>Ai Scores</h2>
-            </div>
-            <div>
-              <h2>Ai Suggestions</h2>
-            </div>
-          </section>
+          <Outlet />
         </section>
       </main>
     </>
