@@ -11,10 +11,6 @@ function Home() {
       </header>
       <main>
         <section>
-          <button>Improve HTML</button>
-          <button>Compare</button>
-        </section>
-        <section>
           <Outlet />
         </section>
       </main>
