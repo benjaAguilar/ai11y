@@ -37,6 +37,10 @@ function InputCode() {
     nav("/details");
   }
 
+  function clearInput() {
+    setUserHtml("");
+  }
+
   return (
     <div className={styles.box}>
       <h2>Input Html</h2>
@@ -49,6 +53,7 @@ function InputCode() {
         onChange={handleEditorChange}
       />
       <button onClick={handleBtn}>Improve Html</button>
+      <button onClick={clearInput}>Clear Input</button>
     </div>
   );
 }
