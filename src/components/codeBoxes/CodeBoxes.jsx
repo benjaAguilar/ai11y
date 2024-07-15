@@ -1,9 +1,10 @@
 import Editor from "@monaco-editor/react";
 import styles from "./codeBoxes.module.css";
 import { useRef } from "react";
+import { useOutletContext } from "react-router-dom";
 
 function CodeBoxes() {
-  const html = `<h1> Hello World lol </h1>`;
+  const { userHtml, response } = useOutletContext();
   const outputRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -30,6 +31,7 @@ function CodeBoxes() {
           className={styles.editor}
           height="400px"
           defaultLanguage="html"
+          value={userHtml}
           theme="vs-dark"
           options={{ readOnly: true }}
           onMount={handleInputEditorDidMount}
@@ -42,7 +44,7 @@ function CodeBoxes() {
           className={styles.editor}
           height="400px"
           defaultLanguage="html"
-          value={html}
+          value={response.htmlCode}
           theme="vs-dark"
           options={{ readOnly: true }}
           onMount={handleEditorDidMount}
