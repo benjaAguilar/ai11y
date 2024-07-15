@@ -1,4 +1,5 @@
 import Editor from "@monaco-editor/react";
+import * as htmlparser2 from "htmlparser2";
 import styles from "../codeBoxes/codeBoxes.module.css";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
@@ -10,8 +11,27 @@ function InputCode() {
     setUserHtml(value);
   }
 
+  function isHtml() {
+    try {
+      const dom = htmlparser2.parseDocument(userHtml);
+      const isHtmlNode = dom.children.some(
+        (node) => node.type === "directive" || node.type === "tag"
+      );
+
+      return isHtmlNode;
+    } catch (error) {
+      console.log("Error parsing HTML: " + error);
+      return false;
+    }
+  }
+
   function handleBtn() {
-    if (userHtml === "") return;
+    const isValidHtml = isHtml();
+
+    if (!isValidHtml) {
+      alert("please provide a valid HTML code");
+      return;
+    }
 
     gen();
     nav("/details");
