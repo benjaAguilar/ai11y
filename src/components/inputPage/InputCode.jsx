@@ -34,7 +34,7 @@ function InputCode() {
     }
 
     gen();
-    nav("/details");
+    nav("/semantic-html/details");
   }
 
   function clearInput() {
