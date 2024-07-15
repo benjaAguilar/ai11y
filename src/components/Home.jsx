@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -58,6 +58,11 @@ function Home() {
           <span>Ai</span>11y
         </h1>
         <p>Improve web accessibility with AI</p>
+        <nav>
+          <Link to={"/"}>Home</Link>
+          <Link to={"/semantic-html"}>Semantic HTML</Link>
+          <Link to={"/"}>Color Contrast</Link>
+        </nav>
       </header>
       <main>
         <section>
