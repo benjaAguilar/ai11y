@@ -2,10 +2,11 @@ import Editor from "@monaco-editor/react";
 import styles from "./output.module.css";
 import { useRef } from "react";
 import Scores from "./scores/Scores";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function OutputCode() {
   const { response } = useOutletContext();
+  const nav = useNavigate();
   const outputRef = useRef(null);
 
   function handleEditorDidMount(editor) {
@@ -34,7 +35,11 @@ function OutputCode() {
           options={{ readOnly: true }}
           onMount={handleEditorDidMount}
         />
-        <button onClick={copyCode}>Copy</button>
+        <div>
+          <button onClick={copyCode}>Copy</button>
+          <button onClick={() => nav("/compare")}>Compare old HTML</button>
+          <button onClick={() => nav("/")}>Input new HTML</button>
+        </div>
       </div>
       <div>
         {/* Scores and Suggestions! */}
