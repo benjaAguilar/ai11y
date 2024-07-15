@@ -12,15 +12,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "/semantic-html",
         element: <InputCode />,
       },
       {
-        path: "/details",
+        path: "/semantic-html/details",
         element: <OutputCode />,
       },
       {
-        path: "/compare",
+        path: "/semantic-html/compare",
         element: <CodeBoxes />,
       },
     ],
