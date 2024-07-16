@@ -5,6 +5,7 @@ import InputCode from "./components/inputPage/InputCode.jsx";
 import OutputCode from "./components/outputPage/OutputPage.jsx";
 import CodeBoxes from "./components/codeBoxes/CodeBoxes.jsx";
 import Hompage from "./components/homepage/Hompage.jsx";
+import Contrast from "./components/colorContrast/Contrast.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/semantic-html/compare",
         element: <CodeBoxes />,
+      },
+      {
+        path: "/color-contrast",
+        element: <Contrast />,
       },
     ],
   },
