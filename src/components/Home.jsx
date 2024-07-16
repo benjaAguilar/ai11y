@@ -54,10 +54,9 @@ function Home() {
   return (
     <>
       <header>
-        <h1>
-          <span>Ai</span>11y
-        </h1>
-        <p>Improve web accessibility with AI</p>
+        <div className="logo">
+          <span>AI</span>11Y
+        </div>
         <nav>
           <Link to={"/"}>Home</Link>
           <Link to={"/semantic-html"}>Semantic HTML</Link>
