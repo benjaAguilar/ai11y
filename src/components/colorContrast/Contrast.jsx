@@ -1,20 +1,15 @@
 import { useState } from "react";
 import Color from "color";
+import InputHex from "./inputHex/InputHex";
 
 function Contrast() {
-  const [InputPlaceholder, setInputPlaceholder] = useState({
-    bg: "#262626",
-    fg: "#DBFF5E",
-  });
-  const [inputs, setInputs] = useState({
-    bg: "#262626",
-    fg: "#DBFF5E",
-  });
-  const [ratio, setRatio] = useState(calcRatio(inputs).toFixed(2));
+  const [bgValue, setBgValue] = useState("#262626");
+  const [fgValue, setFgValue] = useState("#DBFF5E");
+  const [ratio, setRatio] = useState(calcRatio(bgValue, fgValue).toFixed(2));
 
   function switchValues() {
-    setInputs({ bg: inputs.fg, fg: inputs.bg });
-    setInputPlaceholder({ bg: InputPlaceholder.fg, fg: InputPlaceholder.bg });
+    setBgValue(fgValue);
+    setFgValue(bgValue);
   }
 
   function calcColorVals(values) {
@@ -33,10 +28,10 @@ function Contrast() {
     return luminance;
   }
 
-  function calcRatio(colors) {
+  function calcRatio(bg, fg) {
     //convert hex to rgb array of vals
-    let bgRGB = Color(colors.bg).rgb().array();
-    let fgRGB = Color(colors.fg).rgb().array();
+    let bgRGB = Color(bg).rgb().array();
+    let fgRGB = Color(fg).rgb().array();
 
     bgRGB = calcColorVals(bgRGB);
     fgRGB = calcColorVals(fgRGB);
@@ -46,19 +41,8 @@ function Contrast() {
       : (fgRGB + 0.05) / (bgRGB + 0.05);
   }
 
-  function handleInputSet(colors) {
-    setInputs(colors);
-    setRatio(calcRatio(colors).toFixed(2));
-  }
-
-  function isValidHex(colors, value) {
-    const hexColorRegexRGBA =
-      /^#?([a-fA-F0-9]{8}|[a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
-    setInputPlaceholder(colors);
-
-    if (!hexColorRegexRGBA.test(value)) return;
-
-    handleInputSet(colors);
+  function handleInputSet() {
+    setRatio(calcRatio(bgValue, fgValue).toFixed(2));
   }
 
   return (
@@ -66,41 +50,27 @@ function Contrast() {
       <h1>contrast</h1>
       <p>color contrast</p>
       <div>
-        <input
-          style={{ color: "#262626" }}
-          type="text"
-          placeholder="#000000"
-          value={InputPlaceholder.bg}
-          onChange={(e) =>
-            isValidHex(
-              { ...InputPlaceholder, bg: e.target.value },
-              e.target.value
-            )
-          }
+        <InputHex
+          setColor={setBgValue}
+          color={bgValue}
+          handleInputSet={handleInputSet}
         />
         <button onClick={switchValues}>switch</button>
-        <input
-          style={{ color: "#262626" }}
-          type="text"
-          placeholder="#000000"
-          value={InputPlaceholder.fg}
-          onChange={(e) =>
-            isValidHex(
-              { ...InputPlaceholder, fg: e.target.value },
-              e.target.value
-            )
-          }
+        <InputHex
+          setColor={setFgValue}
+          color={fgValue}
+          handleInputSet={handleInputSet}
         />
       </div>
       <div>
-        <p style={{ color: inputs.bg }}>ratio contrast</p>
+        <p style={{ color: bgValue }}>ratio contrast</p>
         <p>
           {ratio} {ratio <= 4.5 ? "poor" : ratio >= 7 ? "very good" : "good"}
         </p>
       </div>
-      <div style={{ backgroundColor: inputs.bg }}>
-        <h2 style={{ color: inputs.fg }}>Example box</h2>
-        <p style={{ color: inputs.fg }}>here you can visualize the contrast</p>
+      <div style={{ backgroundColor: bgValue }}>
+        <h2 style={{ color: fgValue }}>Example box</h2>
+        <p style={{ color: fgValue }}>here you can visualize the contrast</p>
       </div>
     </>
   );
