@@ -60,7 +60,7 @@ function Home() {
         <nav>
           <Link to={"/"}>Home</Link>
           <Link to={"/semantic-html"}>Semantic HTML</Link>
-          <Link to={"/"}>Color Contrast</Link>
+          <Link to={"/color-contrast"}>Color Contrast</Link>
         </nav>
       </header>
       <main>
