@@ -1,6 +1,6 @@
 import Editor from "@monaco-editor/react";
 import * as htmlparser2 from "htmlparser2";
-import styles from "../codeBoxes/codeBoxes.module.css";
+import styles from "./input.module.css";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 function InputCode() {
@@ -52,8 +52,10 @@ function InputCode() {
         value={userHtml}
         onChange={handleEditorChange}
       />
-      <button onClick={handleBtn}>Improve Html</button>
-      <button onClick={clearInput}>Clear Input</button>
+      <div className={styles.btnBox}>
+        <button onClick={handleBtn}>Improve Html</button>
+        <button onClick={clearInput}>Clear Input</button>
+      </div>
     </div>
   );
 }
