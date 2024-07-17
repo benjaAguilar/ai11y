@@ -1,4 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
+
+import { Theme } from "@radix-ui/themes";
+import { Flex, Heading, TabNav, IconButton } from "@radix-ui/themes";
+import { GitHubLogoIcon, DiscordLogoIcon } from "@radix-ui/react-icons";
+import { headerFlex } from "../styleProps";
+
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { useState } from "react";
@@ -34,23 +40,53 @@ function Home() {
   }
 
   return (
-    <>
+    <Theme
+      appearance="dark"
+      panelBackground="translucent"
+      accentColor="iris"
+      radius="large"
+      scaling="100%"
+    >
       <header>
-        <div className="logo">
-          <span>AI</span>11Y
-        </div>
-        <nav>
-          <Link to={"/"}>Home</Link>
-          <Link to={"/semantic-html"}>Semantic HTML</Link>
-          <Link to={"/color-contrast"}>Color Contrast</Link>
-        </nav>
+        <Flex {...headerFlex}>
+          <Heading as="h4" size="7">
+            <span>AI</span>11Y
+          </Heading>
+          <nav>
+            <TabNav.Root>
+              <TabNav.Link active={true}>
+                <Link to={"/"} className="link">
+                  Home
+                </Link>
+              </TabNav.Link>
+              <TabNav.Link active={false}>
+                <Link to={"/semantic-html"} className="link">
+                  Semantic HTML
+                </Link>
+              </TabNav.Link>
+              <TabNav.Link active={false}>
+                <Link to={"/color-contrast"} className="link">
+                  Color Contrast
+                </Link>
+              </TabNav.Link>
+            </TabNav.Root>
+          </nav>
+          <div className="headBtns">
+            <IconButton>
+              <GitHubLogoIcon />
+            </IconButton>
+            <IconButton>
+              <DiscordLogoIcon />
+            </IconButton>
+          </div>
+        </Flex>
       </header>
       <main>
         <section>
           <Outlet context={contextValues} />
         </section>
       </main>
-    </>
+    </Theme>
   );
 }
 
