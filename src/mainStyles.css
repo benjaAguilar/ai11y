@@ -4,6 +4,10 @@ header{
     padding: 1rem;
 }
 
+main, section{
+    height: 85dvh;
+}
+
 span{
     color: var(--iris-10);
 }
@@ -19,4 +23,11 @@ span{
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+.home{
+    height: 100%;
+    .title{
+        font-size: 8rem;
+    }
 }
