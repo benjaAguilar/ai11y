@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
+import "@radix-ui/themes/styles.css";
 import "./mainStyles.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
