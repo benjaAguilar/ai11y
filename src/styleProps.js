@@ -4,4 +4,18 @@ const headerFlex = {
     align: 'end'
 }
 
-export {headerFlex}
+const homePageFlex = {
+    display: 'flex',
+    direction: 'column',
+    justify: 'center',
+    align: 'center',
+    gap: '5rem',
+}
+
+const btnSurface = {
+    variant: 'surface',
+    highContrast: true,
+    size: '4',
+}
+
+export {headerFlex, homePageFlex, btnSurface}
