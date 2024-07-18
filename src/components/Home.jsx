@@ -109,12 +109,19 @@ function Home() {
             </TabNav.Root>
           </nav>
           <div className="headBtns">
-            <IconButton>
-              <GitHubLogoIcon />
-            </IconButton>
-            <IconButton>
-              <DiscordLogoIcon />
-            </IconButton>
+            <a href="https://github.com/benjaAguilar" target="_blank">
+              <IconButton variant="ghost">
+                <GitHubLogoIcon className="icon" />
+              </IconButton>
+            </a>
+            <a
+              href="https://discordapp.com/users/702598995079331951"
+              target="_blank"
+            >
+              <IconButton variant="ghost">
+                <DiscordLogoIcon className="icon" />
+              </IconButton>
+            </a>
           </div>
         </Flex>
       </header>

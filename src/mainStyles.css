@@ -5,8 +5,6 @@ header{
     margin-bottom: 2rem;
 }
 
-
-
 span{
     color: var(--iris-10);
 }
@@ -21,7 +19,7 @@ span{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .home{
@@ -46,4 +44,12 @@ span{
 
 .navBtn{
     margin-left: auto;
+}
+
+.icon{
+    transform: scale(1.2);
+}
+
+.icon:hover{
+    cursor: pointer;
 }
