@@ -1,19 +1,12 @@
 import Editor from "@monaco-editor/react";
 
-import {
-  Grid,
-  Card,
-  Heading,
-  Inset,
-  Flex,
-  Button,
-  TabNav,
-} from "@radix-ui/themes";
+import { Grid, Card, Heading, Inset, Flex, Button } from "@radix-ui/themes";
 
 import { useRef } from "react";
 import Scores from "./scores/Scores";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { btnSurfaceS } from "../../styleProps";
+import SubTab from "../subTab/SubTab";
 
 const dummyResponse = {
   htmlCode: `    <header>
@@ -64,27 +57,7 @@ function OutputCode() {
 
   return (
     <Flex direction="column" gap="2rem" justify="center">
-      <Flex gap="1rem" align="center">
-        <TabNav.Root>
-          <TabNav.Link active={true}>
-            <Link to={"/semantic-html/details"} className="link">
-              Details
-            </Link>
-          </TabNav.Link>
-          <TabNav.Link active={false}>
-            <Link to={"/semantic-html/compare"} className="link">
-              Comparison
-            </Link>
-          </TabNav.Link>
-        </TabNav.Root>
-        <Button
-          {...btnSurfaceS}
-          className="navBtn"
-          onClick={() => nav("/semantic-html")}
-        >
-          Input new HTML
-        </Button>
-      </Flex>
+      <SubTab />
       <div>
         <Grid columns={{ initial: "1", md: "2" }} gap="2rem" justify="center">
           <Card>
