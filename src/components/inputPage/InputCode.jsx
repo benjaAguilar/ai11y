@@ -1,9 +1,23 @@
 import Editor from "@monaco-editor/react";
 import * as htmlparser2 from "htmlparser2";
-import styles from "./input.module.css";
+
+import {
+  Grid,
+  Card,
+  Heading,
+  Text,
+  Badge,
+  Inset,
+  Flex,
+  Button,
+  Blockquote,
+} from "@radix-ui/themes";
+
 import { useNavigate, useOutletContext } from "react-router-dom";
+
 import { openai } from "../Home";
 import { z } from "zod";
+import { btnSurfaceS } from "../../styleProps";
 
 function InputCode() {
   const { userHtml, setUserHtml, gen, setResponse } = useOutletContext();
@@ -64,21 +78,61 @@ function InputCode() {
   }
 
   return (
-    <div className={styles.box}>
-      <h2>Input Html</h2>
-      <Editor
-        className={styles.editor}
-        height="400px"
-        defaultLanguage="html"
-        theme="vs-dark"
-        value={userHtml}
-        onChange={handleEditorChange}
-      />
-      <div className={styles.btnBox}>
-        <button onClick={handleBtn}>Improve Html</button>
-        <button onClick={clearInput}>Clear Input</button>
-      </div>
-    </div>
+    <Flex align="center" justify="center" className="heightFix">
+      <Grid columns={{ initial: "1", md: "2" }} gap="2rem" justify="center">
+        <Card>
+          <Flex direction="column" gap="1rem">
+            <Heading as="h2">Input Html</Heading>
+            <Card>
+              <Inset>
+                <Editor
+                  defaultLanguage="html"
+                  height="400px"
+                  theme="vs-dark"
+                  value={userHtml}
+                  onChange={handleEditorChange}
+                />
+              </Inset>
+            </Card>
+            <Flex gap="1rem">
+              <Button {...btnSurfaceS} onClick={handleBtn}>
+                Improve Html
+              </Button>
+              <Button {...btnSurfaceS} onClick={clearInput}>
+                Clear Input
+              </Button>
+            </Flex>
+          </Flex>
+        </Card>
+        <Flex direction="column" gap="2rem">
+          <Flex direction="column" gap="1rem">
+            <Heading as="h1" size="7">
+              Improve your HTML
+            </Heading>
+            <Text className="txt">
+              Add some Html code and click <Badge>Improve HTML</Badge>.<br />
+              <span>AI11Y</span> is gonna be responsible for improving the
+              semantics of your HTML
+            </Text>
+          </Flex>
+          <div>
+            <Heading as="h2">
+              <span>AI</span>11Y is capable of
+            </Heading>
+            <ul>
+              <li>Improve semantics of HTML</li>
+              <li>Provide before and after semantic scores</li>
+              <li>Provide Tips and suggestions to keep in mind</li>
+            </ul>
+          </div>
+          <Blockquote className="quote">
+            Keep in mind that AI11Y is not an AI model, is just an app that uses
+            OpenAI and VercelSDK. <br /> AI can make mistakes so always check
+            the information
+          </Blockquote>
+        </Flex>
+      </Grid>
+    </Flex>
   );
 }
 
