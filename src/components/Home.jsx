@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 import { Theme } from "@radix-ui/themes";
 import { Flex, Heading, TabNav, IconButton } from "@radix-ui/themes";
@@ -18,6 +18,12 @@ export const openai = createOpenAI({
 function Home() {
   const [response, setResponse] = useState({});
   const [userHtml, setUserHtml] = useState("");
+  const location = useLocation();
+  let tabs = {
+    home: false,
+    html: false,
+    color: false,
+  };
 
   const contextValues = {
     userHtml,
@@ -39,6 +45,37 @@ function Home() {
     }
   }
 
+  switch (location.pathname) {
+    case "/":
+      tabs = {
+        home: true,
+        html: false,
+        color: false,
+      };
+      break;
+    case "/semantic-html":
+      tabs = {
+        home: false,
+        html: true,
+        color: false,
+      };
+      break;
+    case "/color-contrast":
+      tabs = {
+        home: false,
+        html: false,
+        color: true,
+      };
+      break;
+    default:
+      tabs = {
+        home: false,
+        html: true,
+        color: false,
+      };
+      break;
+  }
+
   return (
     <Theme
       appearance="dark"
@@ -54,17 +91,17 @@ function Home() {
           </Heading>
           <nav>
             <TabNav.Root>
-              <TabNav.Link active={true}>
+              <TabNav.Link active={tabs.home}>
                 <Link to={"/"} className="link">
                   Home
                 </Link>
               </TabNav.Link>
-              <TabNav.Link active={false}>
+              <TabNav.Link active={tabs.html}>
                 <Link to={"/semantic-html"} className="link">
                   Semantic HTML
                 </Link>
               </TabNav.Link>
-              <TabNav.Link active={false}>
+              <TabNav.Link active={tabs.color}>
                 <Link to={"/color-contrast"} className="link">
                   Color Contrast
                 </Link>
