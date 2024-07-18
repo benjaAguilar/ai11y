@@ -17,7 +17,7 @@ export const openai = createOpenAI({
 
 function Home() {
   const [response, setResponse] = useState({});
-  const [userHtml, setUserHtml] = useState("");
+  const [userHtml, setUserHtml] = useState("<!-- Your HTML code goes here -->");
   const location = useLocation();
   let tabs = {
     home: false,
