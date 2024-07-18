@@ -2,11 +2,10 @@
 
 header{
     padding: 1rem;
+    margin-bottom: 2rem;
 }
 
-main, section{
-    height: 85dvh;
-}
+
 
 span{
     color: var(--iris-10);
@@ -27,7 +26,20 @@ span{
 
 .home{
     height: 100%;
+    margin-top: 10rem;
     .title{
         font-size: 8rem;
     }
+}
+
+.heightFix{
+    height: 100%;
+}
+
+.txt{
+    color: var(--iris-12);
+}
+
+.quote{
+    margin-top: auto;
 }
