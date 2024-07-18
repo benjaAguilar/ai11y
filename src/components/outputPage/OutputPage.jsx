@@ -1,8 +1,19 @@
 import Editor from "@monaco-editor/react";
-import styles from "./output.module.css";
+
+import {
+  Grid,
+  Card,
+  Heading,
+  Inset,
+  Flex,
+  Button,
+  TabNav,
+} from "@radix-ui/themes";
+
 import { useRef } from "react";
 import Scores from "./scores/Scores";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { btnSurfaceS } from "../../styleProps";
 
 const dummyResponse = {
   htmlCode: `    <header>
@@ -52,54 +63,81 @@ function OutputCode() {
   // if (!response.htmlCode) return <h1>Loading</h1>;
 
   return (
-    <>
-      <nav>
-        <Link>Details</Link>
-        <Link to={"/semantic-html/compare"}>Comparison</Link>
-        <button onClick={() => nav("/semantic-html")}>Input new HTML</button>
-      </nav>
-      <div className={styles.container}>
-        <div className={styles.box}>
-          <h2>Output Html</h2>
-          <Editor
-            className={styles.editor}
-            height="400px"
-            defaultLanguage="html"
-            value={/*response.htmlCode*/ dummyResponse.htmlCode}
-            theme="vs-dark"
-            options={{ readOnly: true }}
-            onMount={handleEditorDidMount}
-          />
-          <div>
-            <button onClick={copyCode}>Copy</button>
-            <button onClick={() => nav("/semantic-html")}>
-              Input new HTML
-            </button>
-          </div>
-        </div>
-        <div>
-          {/* Scores and Suggestions! */}
-          <Scores
-            scoreAfter={/*response.scores.after*/ dummyResponse.scores.after}
-            scoreBefore={/*response.scores.before*/ dummyResponse.scores.before}
-          />
-          <div className={styles.suggestions}>
-            <h2>Suggestions</h2>
+    <Flex direction="column" gap="2rem" justify="center">
+      <Flex gap="1rem" align="center">
+        <TabNav.Root>
+          <TabNav.Link active={true}>
+            <Link to={"/semantic-html/details"} className="link">
+              Details
+            </Link>
+          </TabNav.Link>
+          <TabNav.Link active={false}>
+            <Link to={"/semantic-html/compare"} className="link">
+              Comparison
+            </Link>
+          </TabNav.Link>
+        </TabNav.Root>
+        <Button
+          {...btnSurfaceS}
+          className="navBtn"
+          onClick={() => nav("/semantic-html")}
+        >
+          Input new HTML
+        </Button>
+      </Flex>
+      <div>
+        <Grid columns={{ initial: "1", md: "2" }} gap="2rem" justify="center">
+          <Card>
+            <Flex direction="column" gap="1rem">
+              <Heading as="h2">Output HTML</Heading>
+              <Card>
+                <Inset>
+                  <Editor
+                    height="400px"
+                    defaultLanguage="html"
+                    value={/*response.htmlCode*/ dummyResponse.htmlCode}
+                    theme="vs-dark"
+                    options={{ readOnly: true }}
+                    onMount={handleEditorDidMount}
+                  />
+                </Inset>
+              </Card>
+              <Flex gap="1rem">
+                <Button {...btnSurfaceS} onClick={copyCode}>
+                  Copy
+                </Button>
+                <Button {...btnSurfaceS} onClick={() => nav("/semantic-html")}>
+                  Input new HTML
+                </Button>
+              </Flex>
+            </Flex>
+          </Card>
+          <Flex direction="column" gap="2rem">
+            {/* Scores and Suggestions! */}
+            <Scores
+              scoreAfter={/*response.scores.after*/ dummyResponse.scores.after}
+              scoreBefore={
+                /*response.scores.before*/ dummyResponse.scores.before
+              }
+            />
             <div>
-              <ul>
-                {
-                  /*response.suggestions.map((suggestion, index) => (
+              <Heading as="h2">Suggestions</Heading>
+              <div>
+                <ul>
+                  {
+                    /*response.suggestions.map((suggestion, index) => (
               <p key={index}>{suggestion}</p>
             ))*/ dummyResponse.suggestions.map((suggestion, index) => (
-                    <li key={index}>{suggestion}</li>
-                  ))
-                }
-              </ul>
+                      <li key={index}>{suggestion}</li>
+                    ))
+                  }
+                </ul>
+              </div>
             </div>
-          </div>
-        </div>
+          </Flex>
+        </Grid>
       </div>
-    </>
+    </Flex>
   );
 }
 
