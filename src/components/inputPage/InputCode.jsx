@@ -78,11 +78,11 @@ function InputCode() {
   }
 
   return (
-    <Flex align="center" justify="center" className="heightFix">
+    <Flex className="heightFix">
       <Grid columns={{ initial: "1", md: "2" }} gap="2rem" justify="center">
         <Card>
           <Flex direction="column" gap="1rem">
-            <Heading as="h2">Input Html</Heading>
+            <Heading as="h2">Input HTML</Heading>
             <Card>
               <Inset>
                 <Editor
