@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 
 import { Theme } from "@radix-ui/themes";
-import { Flex, Heading, TabNav, IconButton } from "@radix-ui/themes";
+import { Flex, Heading, TabNav, IconButton, Text } from "@radix-ui/themes";
 import { GitHubLogoIcon, DiscordLogoIcon } from "@radix-ui/react-icons";
 import { headerFlex } from "../styleProps";
 
@@ -130,6 +130,9 @@ function Home() {
           <Outlet context={contextValues} />
         </section>
       </main>
+      <footer>
+        <Text className="foot">Created by ColorCode :D</Text>
+      </footer>
     </Theme>
   );
 }
