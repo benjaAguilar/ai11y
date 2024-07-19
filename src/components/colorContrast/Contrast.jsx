@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Color from "color";
 import InputHex from "./inputHex/InputHex";
 import { openai } from "../Home";
@@ -6,9 +6,31 @@ import { z } from "zod";
 import { useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import {
+  Flex,
+  Heading,
+  IconButton,
+  Card,
+  Text,
+  Button,
+  Inset,
+  Spinner,
+} from "@radix-ui/themes";
+
+import {
+  Cross1Icon,
+  HeartFilledIcon,
+  MagicWandIcon,
+  SymbolIcon,
+} from "@radix-ui/react-icons";
+
+import { btnSurfaceS } from "../../styleProps";
+
 function Contrast() {
   const [bgValue, setBgValue] = useState("#262626");
   const [fgValue, setFgValue] = useState("#DBFF5E");
+  const [btnDisable, setBtnDisable] = useState(false);
+  const suggestionsRef = useRef(null);
   const [ratio, setRatio] = useState(calcRatio(bgValue, fgValue).toFixed(2));
   const [aiSuggestions, setAiSuggestions] = useState({
     suggestion: "",
@@ -38,7 +60,14 @@ function Contrast() {
   };
 
   async function handleAiSuggestions() {
+    setBtnDisable(true);
+
     const res = await gen(aiObject);
+
+    if (suggestionsRef.current) {
+      suggestionsRef.current.style.transform = "scale(1)";
+    }
+    setBtnDisable(false);
 
     const arr = [];
     res.colorIdeas.forEach((idea) => arr.push({ ...idea, id: uuidv4() }));
@@ -92,54 +121,164 @@ function Contrast() {
     setRatio(calcRatio(bgValue, fgValue).toFixed(2));
   }
 
+  function closeSuggestions() {
+    if (suggestionsRef.current) {
+      suggestionsRef.current.style.transform = "scale(0)";
+    }
+  }
+
   return (
     <>
-      <h1>contrast</h1>
-      <p>color contrast</p>
-      <div>
-        <InputHex
-          setColor={setBgValue}
-          color={bgValue}
-          handleInputSet={handleInputSet}
-        />
-        <button onClick={switchValues}>switch</button>
-        <InputHex
-          setColor={setFgValue}
-          color={fgValue}
-          handleInputSet={handleInputSet}
-        />
-      </div>
-      <div>
-        <p style={{ color: bgValue }}>ratio contrast</p>
-        <p>
-          {ratio} {ratio <= 4.5 ? "poor" : ratio >= 7 ? "very good" : "good"}
-        </p>
-      </div>
-      <div>
-        <button onClick={handleAiSuggestions}>AI suggestions</button>
-        <div>
-          <h3>color contrasts suggestions</h3>
-          <p>{aiSuggestions.suggestion}</p>
-          <div>
-            {aiSuggestions.colorIdeas.map((colors) => {
-              return (
-                <div key={colors.id} onClick={() => useColorIdea(colors.id)}>
-                  <div>
-                    <p>{colors.backGround}</p>
-                  </div>
-                  <div>
-                    <p>{colors.foreGround}</p>
-                  </div>
-                </div>
-              );
-            })}
+      <Flex direction="column" gap="2rem">
+        <Card className="colorCard">
+          <Flex direction="column" gap="2rem">
+            <Heading as="h1" size="7">
+              Color contrast
+            </Heading>
+            <Flex direction="column">
+              <Heading as="h3" size="3">
+                ratio contrast
+              </Heading>
+              <Text className="txt">
+                {ratio}{" "}
+                {ratio <= 4.5 ? "poor" : ratio >= 7 ? "very good" : "good"}
+              </Text>
+            </Flex>
+          </Flex>
+        </Card>
+        <Flex gap="1rem" align="center" wrap="wrap">
+          <InputHex
+            setColor={setBgValue}
+            color={bgValue}
+            handleInputSet={handleInputSet}
+          />
+          <IconButton variant="ghost" onClick={switchValues}>
+            <SymbolIcon width="18" height="18" />
+          </IconButton>
+          <InputHex
+            setColor={setFgValue}
+            color={fgValue}
+            handleInputSet={handleInputSet}
+          />
+          <Button
+            {...btnSurfaceS}
+            size="3"
+            className="pushRight"
+            onClick={handleAiSuggestions}
+            disabled={btnDisable}
+          >
+            AI suggestions
+            <Spinner loading={btnDisable}>
+              <MagicWandIcon />
+            </Spinner>
+          </Button>
+        </Flex>
+        <Card>
+          <Card>
+            <Inset>
+              <Flex
+                direction="column"
+                gap="1rem"
+                style={{ backgroundColor: bgValue, padding: "1rem" }}
+              >
+                <Heading as="h5" size="8" style={{ color: fgValue }}>
+                  Lorem Ipsum
+                </Heading>
+                <Heading as="h5" size="7" style={{ color: fgValue }}>
+                  Lorem Ipsum
+                </Heading>
+                <Heading as="h5" size="6" style={{ color: fgValue }}>
+                  Lorem Ipsum
+                </Heading>
+                <Heading as="h5" size="5" style={{ color: fgValue }}>
+                  Lorem Ipsum
+                </Heading>
+                <Text style={{ color: fgValue }} className="txtTest">
+                  <strong>Welcome midudev!</strong> Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. In pellentesque sagittis nulla
+                  eget congue. Morbi vitae velit sollicitudin, lobortis odio
+                  vitae, iaculis sapien. In tincidunt mattis quam, eget mollis
+                  leo volutpat non. Duis ornare, felis quis pretium ultricies,
+                  elit lorem pellentesque nunc, sed elementum sapien risus.
+                </Text>
+                <Flex gap="1rem" align="center">
+                  <Button style={{ backgroundColor: fgValue, color: bgValue }}>
+                    Button
+                  </Button>
+                  <Text className="pushRight" style={{ color: fgValue }}>
+                    <strong>Made with love</strong>
+                  </Text>
+                  <HeartFilledIcon width="20px" height="20px" color={fgValue} />
+                </Flex>
+              </Flex>
+            </Inset>
+          </Card>
+        </Card>
+      </Flex>
+
+      <Card className="suggestionsCard" ref={suggestionsRef}>
+        <Flex direction="column" gap="1rem">
+          <IconButton
+            variant="ghost"
+            className="close"
+            onClick={closeSuggestions}
+          >
+            <Cross1Icon />
+          </IconButton>
+          <Heading as="h2">Suggestions</Heading>
+          <Text className="txt">{aiSuggestions.suggestion}</Text>
+          <div className="over">
+            <Flex direction="column" gap="1rem">
+              {aiSuggestions.colorIdeas.map((colors) => {
+                return (
+                  <Card variant="classic" className="sCard" key={colors.id}>
+                    <Flex
+                      gap="1rem"
+                      align="center"
+                      justify="center"
+                      // eslint-disable-next-line react-hooks/rules-of-hooks
+                      onClick={() => useColorIdea(colors.id)}
+                    >
+                      <Card>
+                        <Flex
+                          direction="column"
+                          gap="0.2rem"
+                          justify="center"
+                          align="center"
+                        >
+                          <Inset side="top">
+                            <div
+                              className="sColor"
+                              style={{ backgroundColor: colors.backGround }}
+                            ></div>
+                          </Inset>
+                          <Text className="txt">{colors.backGround}</Text>
+                        </Flex>
+                      </Card>
+                      <Card>
+                        <Flex
+                          direction="column"
+                          gap="0.2rem"
+                          justify="center"
+                          align="center"
+                        >
+                          <Inset side="top">
+                            <div
+                              className="sColor"
+                              style={{ backgroundColor: colors.foreGround }}
+                            ></div>
+                          </Inset>
+                          <Text className="txt">{colors.foreGround}</Text>
+                        </Flex>
+                      </Card>
+                    </Flex>
+                  </Card>
+                );
+              })}
+            </Flex>
           </div>
-        </div>
-      </div>
-      <div style={{ backgroundColor: bgValue }}>
-        <h2 style={{ color: fgValue }}>Example box</h2>
-        <p style={{ color: fgValue }}>here you can visualize the contrast</p>
-      </div>
+        </Flex>
+      </Card>
     </>
   );
 }
