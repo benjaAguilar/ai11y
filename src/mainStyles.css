@@ -53,3 +53,14 @@ span{
 .icon:hover{
     cursor: pointer;
 }
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    .foot{
+        color: var(--iris-12);
+        font-weight: bold;
+    }
+}
