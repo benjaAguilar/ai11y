@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ColorPicker from "../color-picker/ColorPicker";
 import PropTypes from "prop-types";
+import { TextField, Flex } from "@radix-ui/themes";
+import { BlendingModeIcon } from "@radix-ui/react-icons";
 
 function InputHex({ setColor, color, handleInputSet }) {
   const [InputPlaceholder, setInputPlaceholder] = useState(color);
@@ -27,16 +29,19 @@ function InputHex({ setColor, color, handleInputSet }) {
   }
 
   return (
-    <div>
-      <input
-        style={{ color: "#262626" }}
-        type="text"
+    <Flex gap="0.2rem" align="center">
+      <TextField.Root
+        size="3"
         placeholder="#000000"
         value={InputPlaceholder}
         onChange={(e) => isValidHex(e.target.value)}
-      />
+      >
+        <TextField.Slot>
+          <BlendingModeIcon color={color} />
+        </TextField.Slot>
+      </TextField.Root>
       <ColorPicker color={color} handlePickerChange={handlePickerChange} />
-    </div>
+    </Flex>
   );
 }
 
