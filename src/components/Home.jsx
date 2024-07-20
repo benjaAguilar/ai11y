@@ -41,7 +41,7 @@ function Home() {
       return object;
     } catch (e) {
       console.error(e);
-      return `Error Loading ai model: ${e}`;
+      return false;
     }
   }
 
