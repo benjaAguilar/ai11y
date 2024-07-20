@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 
 import { Theme } from "@radix-ui/themes";
 import { Flex, Heading, TabNav, IconButton, Text } from "@radix-ui/themes";
-import { GitHubLogoIcon, DiscordLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
 import { headerFlex } from "../styleProps";
 
 import { createOpenAI } from "@ai-sdk/openai";
@@ -114,12 +114,9 @@ function Home() {
                 <GitHubLogoIcon className="icon" />
               </IconButton>
             </a>
-            <a
-              href="https://discordapp.com/users/702598995079331951"
-              target="_blank"
-            >
+            <a href="https://www.instagram.com/benja_aguilarv/" target="_blank">
               <IconButton variant="ghost">
-                <DiscordLogoIcon className="icon" />
+                <InstagramLogoIcon className="icon" />
               </IconButton>
             </a>
           </div>
