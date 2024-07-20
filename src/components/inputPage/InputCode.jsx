@@ -18,6 +18,8 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { openai } from "../Home";
 import { z } from "zod";
 import { btnSurfaceS } from "../../styleProps";
+import { data } from "../../sessionData";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 function InputCode() {
   const { userHtml, setUserHtml, gen, setResponse } = useOutletContext();
@@ -68,13 +70,26 @@ function InputCode() {
       return;
     }
 
-    const res = await gen(aiObject);
-    setResponse(res);
+    //if user changed the html call api
+    if (data.userHtml !== userHtml) {
+      <ErrorPage />;
+      const res = await gen(aiObject);
+
+      if (!res) return nav("/"); //change for an error page or something
+
+      setResponse(res);
+      data.userHtml = userHtml;
+      data.responseHtml = res.htmlCode;
+      data.scores = res.scores;
+      data.suggestions = res.suggestions;
+    }
+
     nav("/semantic-html/details");
   }
 
   function clearInput() {
     setUserHtml("");
+    data.userHtml = "";
   }
 
   return (
