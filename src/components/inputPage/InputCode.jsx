@@ -11,6 +11,7 @@ import {
   Flex,
   Button,
   Blockquote,
+  Spinner,
 } from "@radix-ui/themes";
 
 import { useNavigate, useOutletContext } from "react-router-dom";
@@ -19,8 +20,11 @@ import { openai } from "../Home";
 import { z } from "zod";
 import { btnSurfaceS } from "../../styleProps";
 import { data } from "../../sessionData";
+import { useState } from "react";
+import { MagicWandIcon, TrashIcon } from "@radix-ui/react-icons";
 
 function InputCode() {
+  const [disableBtn, setDisableBtn] = useState(false);
   const { userHtml, setUserHtml, gen, setResponse } = useOutletContext();
   const nav = useNavigate();
 
@@ -71,7 +75,11 @@ function InputCode() {
 
     //if user changed the html call api
     if (data.userHtml !== userHtml) {
+      setDisableBtn(true);
+
       const res = await gen(aiObject);
+
+      setDisableBtn(false);
 
       if (!res) return nav("/"); //change for an error page or something
 
@@ -103,16 +111,29 @@ function InputCode() {
                   height="400px"
                   theme="vs-dark"
                   value={userHtml}
+                  options={{ readOnly: disableBtn }}
                   onChange={handleEditorChange}
                 />
               </Inset>
             </Card>
             <Flex gap="1rem">
-              <Button {...btnSurfaceS} onClick={handleBtn}>
+              <Button
+                {...btnSurfaceS}
+                onClick={handleBtn}
+                disabled={disableBtn}
+              >
                 Improve Html
+                <Spinner loading={disableBtn}>
+                  <MagicWandIcon />
+                </Spinner>
               </Button>
-              <Button {...btnSurfaceS} onClick={clearInput}>
+              <Button
+                {...btnSurfaceS}
+                onClick={clearInput}
+                disabled={disableBtn}
+              >
                 Clear Input
+                <TrashIcon />
               </Button>
             </Flex>
           </Flex>
