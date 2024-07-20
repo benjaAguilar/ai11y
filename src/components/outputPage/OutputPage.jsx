@@ -4,41 +4,12 @@ import { Grid, Card, Heading, Inset, Flex, Button } from "@radix-ui/themes";
 
 import { useRef } from "react";
 import Scores from "./scores/Scores";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { btnSurfaceS } from "../../styleProps";
 import SubTab from "../subTab/SubTab";
-
-const dummyResponse = {
-  htmlCode: `    <header>
-      <div class="logo">
-        <img class="logo-img" src="./imgs/logo.svg" alt="" />
-        <p class="logo-title">Color<span id="col">Cast</span></p>
-      </div>
-      <div class="search">
-        <div class="search-box">
-          <input
-            type="text"
-            id="searchbar"
-            placeholder="Search"
-            autocomplete="off"
-          />
-          <div class="suggestions"></div>
-        </div>
-        <img class="search-icon" src="./imgs/search.svg" alt="" />
-      </div>
-    </header>
-`,
-  scores: { after: 90, before: 50 },
-  suggestions: [
-    "suggestion one lorem ipsum",
-    "suggestion two lorem ipsum",
-    "suggestion three lorem ipsum",
-    "suggestion four lorem ipsum",
-  ],
-};
+import { data } from "../../sessionData";
 
 function OutputCode() {
-  const { response } = useOutletContext();
   const nav = useNavigate();
   const outputRef = useRef(null);
 
@@ -53,8 +24,6 @@ function OutputCode() {
     }
   }
 
-  // if (!response.htmlCode) return <h1>Loading</h1>;
-
   return (
     <Flex direction="column" gap="2rem" justify="center">
       <SubTab />
@@ -68,7 +37,7 @@ function OutputCode() {
                   <Editor
                     height="400px"
                     defaultLanguage="html"
-                    value={/*response.htmlCode*/ dummyResponse.htmlCode}
+                    value={data.responseHtml}
                     theme="vs-dark"
                     options={{ readOnly: true }}
                     onMount={handleEditorDidMount}
@@ -88,22 +57,16 @@ function OutputCode() {
           <Flex direction="column" gap="2rem">
             {/* Scores and Suggestions! */}
             <Scores
-              scoreAfter={/*response.scores.after*/ dummyResponse.scores.after}
-              scoreBefore={
-                /*response.scores.before*/ dummyResponse.scores.before
-              }
+              scoreAfter={data.scores.after}
+              scoreBefore={data.scores.before}
             />
             <div>
               <Heading as="h2">Suggestions</Heading>
               <div>
                 <ul>
-                  {
-                    /*response.suggestions.map((suggestion, index) => (
-              <p key={index}>{suggestion}</p>
-            ))*/ dummyResponse.suggestions.map((suggestion, index) => (
-                      <li key={index}>{suggestion}</li>
-                    ))
-                  }
+                  {data.suggestions.map((suggestion, index) => (
+                    <p key={index}>{suggestion}</p>
+                  ))}
                 </ul>
               </div>
             </div>
