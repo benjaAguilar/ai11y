@@ -1,12 +1,11 @@
 import Editor from "@monaco-editor/react";
 import { useRef } from "react";
-import { useOutletContext } from "react-router-dom";
 import SubTab from "../subTab/SubTab";
 import { Card, Heading, Flex, Inset, Button, Grid } from "@radix-ui/themes";
 import { btnSurfaceS } from "../../styleProps";
+import { data } from "../../sessionData";
 
 function CodeBoxes() {
-  const { userHtml, response } = useOutletContext();
   const outputRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -37,7 +36,7 @@ function CodeBoxes() {
                 <Editor
                   height="400px"
                   defaultLanguage="html"
-                  value={userHtml}
+                  value={data.userHtml}
                   theme="vs-dark"
                   options={{ readOnly: true }}
                   onMount={handleInputEditorDidMount}
@@ -59,7 +58,7 @@ function CodeBoxes() {
                 <Editor
                   height="400px"
                   defaultLanguage="html"
-                  value={response.htmlCode}
+                  value={data.responseHtml}
                   theme="vs-dark"
                   options={{ readOnly: true }}
                   onMount={handleEditorDidMount}
