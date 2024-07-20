@@ -96,8 +96,6 @@ function Contrast() {
   function switchValues() {
     setBgValue(fgValue);
     setFgValue(bgValue);
-    data.colors.bg = fgValue;
-    data.colors.fg = bgValue;
   }
 
   function calcColorVals(values) {
