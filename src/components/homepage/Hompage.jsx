@@ -1,8 +1,11 @@
 import { Flex, Heading, Button } from "@radix-ui/themes";
 import { btnSurface, homePageFlex } from "../../styleProps";
 import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
+import { useNavigate } from "react-router-dom";
 
 function Hompage() {
+  const nav = useNavigate();
+
   return (
     <Flex {...homePageFlex} className="home">
       <Heading as="h1" className="title">
@@ -12,10 +15,10 @@ function Hompage() {
         improve web accesibility with <span>AI</span>
       </Heading>
       <Flex gap="1rem" wrap="wrap">
-        <Button {...btnSurface}>
+        <Button {...btnSurface} onClick={() => nav("/semantic-html")}>
           Semantic Html <DoubleArrowRightIcon />
         </Button>
-        <Button {...btnSurface}>
+        <Button {...btnSurface} onClick={() => nav("/color-contrast")}>
           Color contrast <DoubleArrowRightIcon />
         </Button>
       </Flex>
