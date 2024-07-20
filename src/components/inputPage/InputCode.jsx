@@ -19,7 +19,6 @@ import { openai } from "../Home";
 import { z } from "zod";
 import { btnSurfaceS } from "../../styleProps";
 import { data } from "../../sessionData";
-import ErrorPage from "../ErrorPage/ErrorPage";
 
 function InputCode() {
   const { userHtml, setUserHtml, gen, setResponse } = useOutletContext();
@@ -72,7 +71,6 @@ function InputCode() {
 
     //if user changed the html call api
     if (data.userHtml !== userHtml) {
-      <ErrorPage />;
       const res = await gen(aiObject);
 
       if (!res) return nav("/"); //change for an error page or something
