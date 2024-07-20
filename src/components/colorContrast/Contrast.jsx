@@ -25,6 +25,7 @@ import {
 } from "@radix-ui/react-icons";
 
 import { btnSurfaceS } from "../../styleProps";
+import { data } from "../../sessionData";
 
 function Contrast() {
   const [bgValue, setBgValue] = useState("#262626");
@@ -60,6 +61,12 @@ function Contrast() {
   };
 
   async function handleAiSuggestions() {
+    //if the colors didnt change dont make the api call
+    if (data.colors.bg === bgValue && data.colors.fg === fgValue) {
+      console.log("same colors");
+      return (suggestionsRef.current.style.transform = "scale(1)");
+    }
+
     setBtnDisable(true);
 
     const res = await gen(aiObject);
@@ -71,6 +78,9 @@ function Contrast() {
 
     const arr = [];
     res.colorIdeas.forEach((idea) => arr.push({ ...idea, id: uuidv4() }));
+
+    data.colors.bg = bgValue;
+    data.colors.fg = fgValue;
 
     const obj = { ...res, colorIdeas: arr };
     setAiSuggestions(obj);
@@ -86,6 +96,8 @@ function Contrast() {
   function switchValues() {
     setBgValue(fgValue);
     setFgValue(bgValue);
+    data.colors.bg = fgValue;
+    data.colors.fg = bgValue;
   }
 
   function calcColorVals(values) {
