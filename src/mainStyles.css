@@ -157,6 +157,13 @@ footer{
     color: var(--iris-10);
 }
 
+.errorPage{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 @media (max-width: 600px){
     nav{
         display: none;
