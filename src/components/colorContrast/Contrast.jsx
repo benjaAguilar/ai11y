@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import Color from "color";
 import InputHex from "./inputHex/InputHex";
 import { openai } from "../Home";
 import { z } from "zod";
@@ -18,7 +17,9 @@ import {
 } from "@radix-ui/themes";
 
 import {
+  CheckCircledIcon,
   Cross1Icon,
+  CrossCircledIcon,
   HeartFilledIcon,
   MagicWandIcon,
   SymbolIcon,
@@ -26,13 +27,24 @@ import {
 
 import { btnSurfaceS } from "../../styleProps";
 import { data } from "../../sessionData";
+import tinycolor from "tinycolor2";
 
 function Contrast() {
   const [bgValue, setBgValue] = useState("#262626");
   const [fgValue, setFgValue] = useState("#DBFF5E");
   const [btnDisable, setBtnDisable] = useState(false);
   const suggestionsRef = useRef(null);
-  const [ratio, setRatio] = useState(calcRatio(bgValue, fgValue).toFixed(2));
+
+  const [ratio, setRatio] = useState(
+    tinycolor.readability(bgValue, fgValue).toFixed(2)
+  );
+  const [AA, setAA] = useState(
+    tinycolor.isReadable(bgValue, fgValue, { level: "AA", size: "small" })
+  );
+  const [AAA, setAAA] = useState(
+    tinycolor.isReadable(bgValue, fgValue, { level: "AAA", size: "small" })
+  );
+
   const [aiSuggestions, setAiSuggestions] = useState({
     suggestion: "",
     colorIdeas: [],
@@ -98,37 +110,15 @@ function Contrast() {
     setFgValue(bgValue);
   }
 
-  function calcColorVals(values) {
-    //convert values in a range of 0 and 1
-    const linearRgb = values.map((val) => {
-      const value = val / 255;
-      return value <= 0.03928
-        ? value / 12.92
-        : Math.pow((value + 0.055) / 1.055, 2.4);
-    });
-
-    //calc the relative luminance R * G * B
-    const luminance =
-      0.2126 * linearRgb[0] + 0.7152 * linearRgb[1] + 0.0722 * linearRgb[2];
-
-    return luminance;
-  }
-
-  function calcRatio(bg, fg) {
-    //convert hex to rgb array of vals
-    let bgRGB = Color(bg).rgb().array();
-    let fgRGB = Color(fg).rgb().array();
-
-    bgRGB = calcColorVals(bgRGB);
-    fgRGB = calcColorVals(fgRGB);
-
-    return bgRGB > fgRGB
-      ? (bgRGB + 0.05) / (fgRGB + 0.05)
-      : (fgRGB + 0.05) / (bgRGB + 0.05);
-  }
-
   function handleInputSet() {
-    setRatio(calcRatio(bgValue, fgValue).toFixed(2));
+    const ratio = tinycolor.readability(bgValue, fgValue).toFixed(2);
+    setAA(
+      tinycolor.isReadable(bgValue, fgValue, { level: "AA", size: "small" })
+    );
+    setAAA(
+      tinycolor.isReadable(bgValue, fgValue, { level: "AAA", size: "small" })
+    );
+    setRatio(ratio);
   }
 
   function closeSuggestions() {
@@ -145,14 +135,44 @@ function Contrast() {
             <Heading as="h1" size="7">
               Color contrast
             </Heading>
-            <Flex direction="column">
-              <Heading as="h3" size="3">
-                ratio contrast
-              </Heading>
-              <Text className="txt">
-                {ratio}{" "}
-                {ratio <= 4.5 ? "poor" : ratio >= 7 ? "very good" : "good"}
-              </Text>
+            <Flex gap="3rem" align="center">
+              <Flex direction="column">
+                <Heading as="h3" size="3">
+                  Ratio Contrast
+                </Heading>
+                <Text className="txt">
+                  {ratio}{" "}
+                  {ratio <= 4.5 ? "poor" : ratio >= 7 ? "very good" : "good"}
+                </Text>
+              </Flex>
+              <Flex direction="column">
+                <Heading as="h3" size="3">
+                  AA
+                </Heading>
+                {AA ? (
+                  <Flex align="center" gap="0.2rem">
+                    <CheckCircledIcon /> <Text className="txt">Pass</Text>
+                  </Flex>
+                ) : (
+                  <Flex align="center" gap="0.2rem">
+                    <CrossCircledIcon /> <Text className="txt">Fail</Text>
+                  </Flex>
+                )}
+              </Flex>
+              <Flex direction="column">
+                <Heading as="h3" size="3">
+                  AAA
+                </Heading>
+                {AAA ? (
+                  <Flex align="center" gap="0.2rem">
+                    <CheckCircledIcon /> <Text className="txt">Pass</Text>
+                  </Flex>
+                ) : (
+                  <Flex align="center" gap="0.2rem">
+                    <CrossCircledIcon /> <Text className="txt">Fail</Text>
+                  </Flex>
+                )}
+              </Flex>
             </Flex>
           </Flex>
         </Card>
