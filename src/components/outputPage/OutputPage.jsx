@@ -65,7 +65,7 @@ function OutputCode() {
               <div>
                 <ul>
                   {data.suggestions.map((suggestion, index) => (
-                    <p key={index}>{suggestion}</p>
+                    <li key={index}>{suggestion}</li>
                   ))}
                 </ul>
               </div>
