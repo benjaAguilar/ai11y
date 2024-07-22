@@ -14,7 +14,7 @@ function Hompage() {
       <Heading as="h2">
         improve web accesibility with <span>AI</span>
       </Heading>
-      <Flex gap="1rem" wrap="wrap">
+      <Flex gap="1rem" wrap="wrap" className="homepageBtns">
         <Button {...btnSurface} onClick={() => nav("/semantic-html")}>
           Semantic Html <DoubleArrowRightIcon />
         </Button>

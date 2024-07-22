@@ -170,3 +170,17 @@ footer{
         display: block;
     }
 }
+
+@media (max-width: 450px){
+    .home{
+        text-align: center;
+        .title{
+            font-size: 5rem;
+        }
+    }
+
+    .homepageBtns{
+        justify-content: center;
+        align-items: center;
+    }
+}
