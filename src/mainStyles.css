@@ -130,3 +130,43 @@ footer{
 .sCard{
     background-color: black;
 }
+
+.H-menu{
+    display: none;
+}
+
+.menu{
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 70px;
+    left: 0;
+    z-index: 5;
+}
+
+.menuLinks{
+    color: var(--iris-12);
+    padding: 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 150ms ease;
+}
+
+.menuLinks:hover{
+    cursor: pointer;
+    color: var(--iris-10);
+}
+
+@media (max-width: 600px){
+    nav{
+        display: none;
+    }
+
+    .headBtns{
+        display: none;
+    }
+
+    .H-menu{
+        display: block;
+    }
+}
