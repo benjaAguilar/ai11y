@@ -52,7 +52,7 @@ function Contrast() {
   const { gen } = useOutletContext();
 
   const prompt = `
-  Hazme una sugerencia de no mas de 50 palabras de como mejorar el contraste 
+  Hazme una sugerencia de no mas de 50 palabras en idioma ingles de como mejorar el contraste 
   en los colores ${bgValue} y ${fgValue} para mejorar la accecibilidad web sin 
   incluir los colores en la sugerencia,
   si su contrast ratio ya de por si cumple con estandares AA intenta mejorarlo a AAA o

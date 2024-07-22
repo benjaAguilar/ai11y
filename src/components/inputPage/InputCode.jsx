@@ -31,7 +31,7 @@ function InputCode() {
   const prompt = `
   Mejora el siguiente codigo html teniendo en cuenta las mejores practicas para accesibilidad web y html semantico,
   ademas haz puntuaciones de 0 a 100 del codigo de antes y del despues mejorado,
-  agrega tambien unas sugerencias de no mas de 100 palabras para mejorar la accesibilidad del codigo y ten en cuenta de incluir cosas que
+  agrega tambien unas sugerencias de no mas de 100 palabras en idioma ingles para mejorar la accesibilidad del codigo y ten en cuenta de incluir cosas que
   pueden no estarse viendo a simple vista como un event listener click a un div para que el usuario tenga en cuenta.
   Este es el codigo HTML:
   ${userHtml}  
