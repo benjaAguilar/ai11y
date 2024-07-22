@@ -8,6 +8,7 @@ import { headerFlex } from "../styleProps";
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { useState } from "react";
+import MenuBtn from "./MenuBtn/MenuBtn.jsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const openai = createOpenAI({
@@ -120,6 +121,7 @@ function Home() {
               </IconButton>
             </a>
           </div>
+          <MenuBtn />
         </Flex>
       </header>
       <main>
