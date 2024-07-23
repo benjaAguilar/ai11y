@@ -11,12 +11,13 @@ import {
   InfoCircledIcon,
   LockClosedIcon,
 } from "@radix-ui/react-icons";
-import { btnSurfaceS } from "../../styleProps";
+import { btnSoftS, btnSurfaceS } from "../../styleProps";
 import { useEffect, useState } from "react";
+import { createOpenAI } from "@ai-sdk/openai";
 import { data } from "../../sessionData";
 import PropTypes from "prop-types";
 
-function ErrorDialog({ isOpen, error, setDialog }) {
+function ErrorDialog({ isOpen, error, setDialog, setKey }) {
   const [dialogOpen, setDialogOpen] = useState(isOpen);
   const [userKey, setUserKey] = useState(data.userKey);
 
@@ -27,6 +28,24 @@ function ErrorDialog({ isOpen, error, setDialog }) {
   function updateUserKey(value) {
     setUserKey(value);
     data.userKey = value;
+    setKey(() =>
+      createOpenAI({
+        apiKey: value,
+        compatibility: "strict",
+      })
+    );
+  }
+
+  function setDefaultKey() {
+    setKey(() =>
+      createOpenAI({
+        apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+        compatibility: "strict",
+      })
+    );
+    setUserKey("");
+    data.userKey = "";
+    setDialog(false);
   }
 
   return (
@@ -68,15 +87,20 @@ function ErrorDialog({ isOpen, error, setDialog }) {
             </TextField.Slot>
           </TextField.Root>
           <Dialog.Close>
-            <Button
-              {...btnSurfaceS}
-              className="close"
-              onClick={() => {
-                setDialog(false);
-              }}
-            >
-              Close
-            </Button>
+            <Flex align="center" gap="1rem" className="close">
+              <Button {...btnSoftS} onClick={setDefaultKey}>
+                Use Default key
+              </Button>
+
+              <Button
+                {...btnSurfaceS}
+                onClick={() => {
+                  setDialog(false);
+                }}
+              >
+                Done
+              </Button>
+            </Flex>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>
@@ -88,6 +112,7 @@ ErrorDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   error: PropTypes.string,
   setDialog: PropTypes.func.isRequired,
+  setKey: PropTypes.func.isRequired,
 };
 
 export default ErrorDialog;
