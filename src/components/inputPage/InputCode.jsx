@@ -22,9 +22,12 @@ import { btnSurfaceS } from "../../styleProps";
 import { data } from "../../sessionData";
 import { useState } from "react";
 import { MagicWandIcon, TrashIcon } from "@radix-ui/react-icons";
+import ErrorDialog from "../ErrorDialog/ErrorDialog";
 
 function InputCode() {
   const [disableBtn, setDisableBtn] = useState(false);
+  const [errorDialog, setErrorDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { userHtml, setUserHtml, gen, setResponse } = useOutletContext();
   const nav = useNavigate();
 
@@ -78,10 +81,15 @@ function InputCode() {
       setDisableBtn(true);
 
       const res = await gen(aiObject);
-
       setDisableBtn(false);
 
-      if (!res) return nav("/"); //change for an error page or something
+      //if the api call fails
+      if (!res.success) {
+        setErrorDialog(true);
+        console.log(res.errorMessage);
+        setErrorMessage(res.errorMessage.message);
+        return;
+      }
 
       setResponse(res);
       data.userHtml = userHtml;
@@ -166,6 +174,11 @@ function InputCode() {
           </Blockquote>
         </Flex>
       </Grid>
+      <ErrorDialog
+        isOpen={errorDialog}
+        error={errorMessage}
+        setDialog={setErrorDialog}
+      />
     </Flex>
   );
 }
