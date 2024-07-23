@@ -2,7 +2,7 @@
 
 ![](./public/AI11Ylogo.png)
 
-## Improve your web accecibility with AI
+## Improve your web accessibility with AI
 
 AI11Y is powered with the language model gpt-3.5-turbo of OpenAI and uses
 Vercel AI SDK that abstracts away the differences between model providers, eliminates boilerplate code for building chatbots, and allows you to go beyond text output to generate rich, interactive components.
