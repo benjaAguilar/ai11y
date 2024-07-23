@@ -9,16 +9,23 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { useState } from "react";
 import MenuBtn from "./MenuBtn/MenuBtn.jsx";
+import { data } from "../sessionData.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const openai = createOpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+export const userOpenai = createOpenAI({
+  apiKey: data.userKey,
   compatibility: "strict",
 });
 
 function Home() {
   const [response, setResponse] = useState({});
   const [userHtml, setUserHtml] = useState("<!-- Your HTML code goes here -->");
+  const [openai, setOpenai] = useState(() =>
+    createOpenAI({
+      apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+      compatibility: "strict",
+    })
+  );
   const location = useLocation();
   let tabs = {
     home: false,
@@ -32,6 +39,8 @@ function Home() {
     gen,
     response,
     setResponse,
+    openai,
+    setOpenai,
   };
 
   async function gen(obj) {
