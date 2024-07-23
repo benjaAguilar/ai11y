@@ -24,4 +24,10 @@ const btnSurfaceS = {
     size: '2',
 }
 
-export {headerFlex, homePageFlex, btnSurface, btnSurfaceS}
+const btnSoftS = {
+    variant: 'ghost',
+    highContrast: true,
+    size: '2',
+}
+
+export {headerFlex, homePageFlex, btnSurface, btnSurfaceS, btnSoftS}
