@@ -12,7 +12,7 @@ function Hompage() {
         <span>AI</span>11Y
       </Heading>
       <Heading as="h2">
-        improve web accesibility with <span>AI</span>
+        improve web accessibility with <span>AI</span>
       </Heading>
       <Flex gap="1rem" wrap="wrap" className="homepageBtns">
         <Button {...btnSurface} onClick={() => nav("/semantic-html")}>
