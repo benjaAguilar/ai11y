@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import InputHex from "./inputHex/InputHex";
-import { openai } from "../Home";
 import { z } from "zod";
 import { useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import ErrorDialog from "../ErrorDialog/ErrorDialog";
 
 import {
   Flex,
@@ -33,7 +33,10 @@ function Contrast() {
   const [bgValue, setBgValue] = useState("#262626");
   const [fgValue, setFgValue] = useState("#DBFF5E");
   const [btnDisable, setBtnDisable] = useState(false);
+  const [errorDialog, setErrorDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const suggestionsRef = useRef(null);
+  const { openai, setOpenai } = useOutletContext();
 
   const [ratio, setRatio] = useState(
     tinycolor.readability(bgValue, fgValue).toFixed(2)
@@ -83,10 +86,18 @@ function Contrast() {
 
     const res = await gen(aiObject);
 
+    setBtnDisable(false);
+
+    //if api call fails
+    if (!res.success) {
+      setErrorDialog(true);
+      setErrorMessage(res.errorMessage.message);
+      return;
+    }
+
     if (suggestionsRef.current) {
       suggestionsRef.current.style.transform = "scale(1)";
     }
-    setBtnDisable(false);
 
     const arr = [];
     res.colorIdeas.forEach((idea) => arr.push({ ...idea, id: uuidv4() }));
@@ -309,6 +320,12 @@ function Contrast() {
           </div>
         </Flex>
       </Card>
+      <ErrorDialog
+        isOpen={errorDialog}
+        error={errorMessage}
+        setDialog={setErrorDialog}
+        setKey={setOpenai}
+      />
     </>
   );
 }
