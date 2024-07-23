@@ -86,7 +86,6 @@ function InputCode() {
       //if the api call fails
       if (!res.success) {
         setErrorDialog(true);
-        console.log(res.errorMessage);
         setErrorMessage(res.errorMessage.message);
         return;
       }
