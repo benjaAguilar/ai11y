@@ -9,14 +9,16 @@ Vercel AI SDK that abstracts away the differences between model providers, elimi
 
 ## Features
 
-- Improve semantic HTML
-  Provide some HTML code and receive an output semantically enhanced by the AI,
-  you gonna receive scores and suggestions to improve and learn, also you can compare your input
-  and output code.
+### Improve semantic HTML
 
-- Enhance color contrasts
-  Provide background and foreground colors to check contrast ratios based on WCAG guidelines,
-  also AI can provide and suggest similar colors to try, keeping good color contrasts.
+Provide some HTML code and receive an output semantically enhanced by the AI,
+you gonna receive scores and suggestions to improve and learn, also you can compare your input
+and output code.
+
+### Enhance color contrasts
+
+Provide background and foreground colors to check contrast ratios based on WCAG guidelines,
+also AI can provide and suggest similar colors to try, keeping good color contrasts.
 
 ## Install
 
