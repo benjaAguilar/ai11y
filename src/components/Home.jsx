@@ -39,10 +39,16 @@ function Home() {
       const { object } = await generateObject(obj);
 
       console.log(object);
-      return object;
+      return {
+        ...object,
+        success: true,
+      };
     } catch (e) {
       console.error(e);
-      return false;
+      return {
+        success: false,
+        errorMessage: e,
+      };
     }
   }
 
