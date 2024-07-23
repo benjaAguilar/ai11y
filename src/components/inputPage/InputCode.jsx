@@ -16,7 +16,6 @@ import {
 
 import { useNavigate, useOutletContext } from "react-router-dom";
 
-import { openai } from "../Home";
 import { z } from "zod";
 import { btnSurfaceS } from "../../styleProps";
 import { data } from "../../sessionData";
@@ -28,7 +27,8 @@ function InputCode() {
   const [disableBtn, setDisableBtn] = useState(false);
   const [errorDialog, setErrorDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { userHtml, setUserHtml, gen, setResponse } = useOutletContext();
+  const { userHtml, setUserHtml, gen, setResponse, openai, setOpenai } =
+    useOutletContext();
   const nav = useNavigate();
 
   const prompt = `
@@ -178,6 +178,7 @@ function InputCode() {
         isOpen={errorDialog}
         error={errorMessage}
         setDialog={setErrorDialog}
+        setKey={setOpenai}
       />
     </Flex>
   );
